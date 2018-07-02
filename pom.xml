@@ -124,8 +124,21 @@
 	    <groupId>mysql</groupId>
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>5.1.40</version>
-     </dependency>
-      
+     </dependency> 	
+     
+     <dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>1.7.25</version>
+   </dependency>
+   
+   <dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-log4j12</artifactId>
+    <version>1.7.25</version>
+   <!--  <scope>test</scope> -->
+ 	</dependency>
+		
   </dependencies> 
   
   <!-- 配置build环境 -->
@@ -151,5 +164,6 @@
 				</configuration>
 			</plugin>      
        </plugins>
-  </build> 
+       
+   </build> 
 </project>

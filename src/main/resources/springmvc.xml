@@ -49,6 +49,9 @@
 						<value>5242880</value>
 				</property>
 		</bean>
+		<!-- 配置全局异常处理器 -->
+	  <bean class="com.neusoft.control.GlobalExceptionResolver"></bean>
+		
 </beans>
 
 
