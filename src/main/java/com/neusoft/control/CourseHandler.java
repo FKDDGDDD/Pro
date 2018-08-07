@@ -23,7 +23,6 @@ import com.neusoft.po.LessonBranch;
 import com.neusoft.po.Message;
 import com.neusoft.po.Sorder;
 import com.neusoft.po.Swiper;
-import com.neusoft.FastDFS.FileManager;
 import com.neusoft.po.Address;
 import com.neusoft.po.FreeListen;
 import com.neusoft.service.BackIndexService;
@@ -31,7 +30,6 @@ import com.neusoft.service.CourseService;
 import com.neusoft.service.EnterpriseService;
 import com.neusoft.service.EnterpriseServiceForCourse;
 import com.neusoft.service.OrderServiceForCourse;
-import com.neusoft.tools.RedisTools;
 import com.neusoft.tools.Tools;
 import com.neusoft.tools.UserBasedCF;
 import com.neusoft.vo.AddressVo;
@@ -41,10 +39,6 @@ import com.neusoft.vo.FreeListenPageVo;
 import com.neusoft.vo.SingleAddress;
 import com.neusoft.vo.TotalCoursePageVo;
 import com.neusoft.vo.TotalFreeListenPageVo;
-import com.neusoft.vo.UserCouponVo;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 
 @Controller
@@ -64,26 +58,31 @@ public class CourseHandler {
 	
 	@Autowired
 	private BackIndexService backIndexService;
-	
-	@Autowired
-	private JedisPool jedisPool;
 	@RequestMapping(value="/BackEnd/upload/cover")
 	@ResponseBody		
-	public String upload(@RequestParam("file") MultipartFile upload,HttpServletRequest request) throws IOException{
+	public String upload(@RequestParam("file") MultipartFile upload,HttpServletRequest request){
 		System.out.println(".....CourseHandle.........upload()...........");
-//		String original_name=upload.getOriginalFilename();
-//		String filename = System.currentTimeMillis()+request.getSession().getId()+original_name;
-//
-//		String path = request.getServletContext().getRealPath("/");
-//		
-//		File f = new File(path);
-//		String ppath = f.getParent();
-//		
-//		System.out.println(ppath);
-//
-//		File dest = new File(ppath+"/upload/cover", filename);
-		String url=FileManager.upload(upload.getBytes(), upload.getOriginalFilename());
-		String result="{\"code\":0,\"url\":\""+url+"\",\"name\":\""+upload.getOriginalFilename()+"\"}";
+		String original_name=upload.getOriginalFilename();
+		String filename = System.currentTimeMillis()+request.getSession().getId()+original_name;
+
+		String path = request.getServletContext().getRealPath("/");
+		
+		File f = new File(path);
+		String ppath = f.getParent();
+		
+		System.out.println(ppath);
+
+		File dest = new File(ppath+"/upload/cover", filename);
+		try {
+			upload.transferTo(dest);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String result="{\"code\":0,\"url\":\""+filename+"\",\"name\":\""+original_name+"\"}";
 		System.out.println(result);
 		return result;
 	}
@@ -650,9 +649,8 @@ public class CourseHandler {
 		
 		@RequestMapping(value="FrontEnd/buy/lesson")
 		@ResponseBody		
-		public String upload( String username,int lid,String phonenumber,int coupon,String branchname, HttpServletRequest request){
+		public String upload(String username,String phonenumber,int lid,HttpServletRequest request){
 			
-			System.out.println("now insert into order"+"usrname"+username);
 			HttpSession session = request.getSession();
 			int  qid = (int) session.getAttribute("qid");
 			Sorder s=new Sorder();
@@ -661,8 +659,6 @@ public class CourseHandler {
 			s.setLid(lid);
 			s.setUsername(username);
 			s.setTel(phonenumber);
-			s.setCoupon(coupon);
-			s.setBranchname(branchname);
 			
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String date=df.format(new Date());
@@ -683,12 +679,6 @@ public class CourseHandler {
 			String result=null;
 			try {
 				orderService.saveOrder(s);
-				UserCouponVo ucv=new UserCouponVo();
-				int u_id =Integer.parseInt(request.getSession().getAttribute("uid").toString());
-				ucv.setC_id(coupon);
-				ucv.setU_id(u_id);
-				orderService.changeCouponStatus(ucv);
-				System.out.println("uid:"+u_id+",c_id:"+coupon);
 				 result="{\"result\":0}";
 				
 			} catch (Exception e) {
@@ -878,12 +868,10 @@ public class CourseHandler {
 			List<Lesson> lessons =new ArrayList<Lesson>();
 			HttpSession session = request.getSession();
 			int qid = (int) session.getAttribute("qid");
-		/*	String path = request.getServletContext().getRealPath("/");			
+			String path = request.getServletContext().getRealPath("/");			
 			File f = new File(path);
 			String ppath = f.getParent();
-			String filename = ppath +"//upload//rating.txt";*/
-			Jedis redis = jedisPool.getResource();
-			String filename = RedisTools.RedisToFile(redis);
+			String filename = ppath +"//upload//rating.txt";
 			int itemCount = backIndexService.seleceMaxLessonId(qid);
 			Integer userCount = backIndexService.selectUserNum(qid);
 			System.out.println("itemcount:"+itemCount);

@@ -19,11 +19,7 @@ import com.alibaba.fastjson.*;
 import com.neusoft.po.Sorder;
 import com.neusoft.service.OrderService;
 import com.neusoft.tools.FileInputUtil;
-import com.neusoft.tools.RedisTools;
 import com.neusoft.vo.RatingItem;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 /**
  * 订单处理控制器
@@ -34,8 +30,6 @@ import redis.clients.jedis.JedisPool;
 public class OrderHandler {
 		@Autowired
 		private OrderService orderService;
-		@Autowired
-		private JedisPool jedisPool;
 		
 		@RequestMapping(value="/FrontEnd/order/getOrders")
 		@ResponseBody
@@ -252,8 +246,6 @@ public class OrderHandler {
 				System.out.println("lid" + ratingItem.getLid());
 				orderService.addRating(oid, rating);
 				String str = "\r\n" + ratingItem.getUid() + "," + ratingItem.getLid() + "," + rating;
-				Jedis redis = jedisPool.getResource();
-				RedisTools.AppendToRedis(redis, str);
 				System.out.println(str);
 				String path = request.getServletContext().getRealPath("/");
 				String ppath = new File(path).getParent();

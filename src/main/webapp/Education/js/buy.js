@@ -34,5 +34,4 @@ function buy_init(){
 			 branch_name = value;
 		 }
 		document.getElementById("branch").innerHTML=branch_name;
-		document.getElementById("branchname").value=branch_name;
 }

@@ -30,20 +30,21 @@
 	
 	<bean id = "jedisPool" class = "redis.clients.jedis.JedisPool">
 		<constructor-arg name="poolConfig" ref = "poolConfig"></constructor-arg>
-		<constructor-arg name="host" value="10.25.39.145"></constructor-arg>
+		<constructor-arg name="host" value="10.25.39.164"></constructor-arg>
 		<constructor-arg name="port" value = "6379"></constructor-arg>
 		<constructor-arg name="timeout" value = "6000"></constructor-arg>
-		<constructor-arg name="password" value = "1997"></constructor-arg>	
+		<constructor-arg name="password" value = "cy19970611"></constructor-arg>
+		
 	</bean>
 	<!-- 配置数据源 -->
 	<!-- dbcp2lian'jie -->
 	<bean id="ds"  class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-			<property name="url"  value="jdbc:mysql://10.25.39.145:3306/team2?characterEncoding=utf-8">
+			<property name="url"  value="jdbc:mysql://localhost:3306/team?characterEncoding=utf-8">
 			<!-- jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8 -->
 			</property>
-			<property name="username" value="root" />
-			<property name="password" value="1997" />
+			<property name="username" value="chen" />
+			<property name="password" value="cy19970611" />
 	</bean>
 	
 	<!-- 配置session工厂 -->

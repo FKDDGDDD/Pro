@@ -32,17 +32,17 @@ public class MessageHandler {
 @ResponseBody
 public String publishMessage(String mtitle,@RequestParam MultipartFile[] upload,HttpServletRequest request) throws Exception{
 	System.out.println("........MessageHandle.......publish.....");
-/*	System.out.println(request.getRequestURI());
+	System.out.println(request.getRequestURI());
 	String path = request.getServletContext().getRealPath("/");
 	String ppath = new File(path).getParent();
-	path = ppath+"/upload/messageimgs";*/
+	path = ppath+"/upload/messageimgs";
 	HttpSession session = request.getSession();
 	int  qid = (int) session.getAttribute("qid");
 	Message message = new Message();
 	message.setMtitle(Tools.Stringfilter(mtitle));
 	message.setQid(qid);
 	//boolean isOK = true;
-	boolean isOK = messageService.saveMessage(message, upload);
+	boolean isOK = messageService.saveMessage(message, upload, path);
 	if(isOK){
 		return "{\"result\":true}";
 	}
@@ -74,7 +74,10 @@ public String messagelist_Handler(HttpServletRequest request) throws Exception{
 @RequestMapping(value="/BackEnd/message/messagedelete")
 public String messagedelete_Handler(HttpServletRequest request,int mid,int currentPage) throws Exception{
 		System.out.println(".........MessageHandler..........messagedelete_Handler()........");
-		boolean isOK = messageService.deleteMessage(mid);
+		String path = request.getServletContext().getRealPath("/");
+		String ppath = new File(path).getParent();
+		path = ppath+"/upload/messageimgs";
+		boolean isOK = messageService.deleteMessage(mid, path);
 		return "forward:/BackEnd/message/messagelist";
 }
 

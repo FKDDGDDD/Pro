@@ -69,10 +69,8 @@ public class CouponServiceBean implements CouponService {
 		int num = couponMapper.getCouponById(uc.getC_id()).getChan_integral();
 		map.put("denum", num);
 		int update = couponMapper.updateUserInte(map);
-		if(add>0 && update>0){
-			couponMapper.reduceRemain( uc.getC_id());
+		if(add>0 && update>0)
 			return true;
-		}
 		return false;
 	}
 	
@@ -131,8 +129,5 @@ public class CouponServiceBean implements CouponService {
 			return true;
 		return false;
 	}
-
-
-	
 	
 }

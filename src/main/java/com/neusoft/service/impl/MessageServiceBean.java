@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.neusoft.FastDFS.FileManager;
 import com.neusoft.mapper.MessageMapper;
 import com.neusoft.po.Message;
 import com.neusoft.po.MessageImg;
@@ -80,19 +79,22 @@ public class MessageServiceBean implements MessageService {
 	}
 
 	@Override
-	public boolean saveMessage(Message message, MultipartFile[] upload) throws Exception {
+	public boolean saveMessage(Message message, MultipartFile[] upload,String path) throws Exception {
 		System.out.println(".....MessageServiceBean........saveMessage().........");
 		int count = messageMapper.addMessage(message);
 		if(count==1){
 		MessageImg messageImg = new MessageImg();
 		messageImg.setMid(message.getMid());
 		for(int i=0;i<upload.length;i++){
-			String filename = FileManager.upload(upload[i].getBytes(), upload[i].getOriginalFilename());
+			String filename  =System.currentTimeMillis()+upload[i].getOriginalFilename();
+			//InputStream inputStream = upload[i].getInputStream();
+			File dest = new File(path,filename);	
 			messageImg.setImgUrl(filename);
 			count = messageMapper.addMessageImg(messageImg);
 			if(count!=1){
 				return false;
 			}
+			upload[i].transferTo(dest);
 		}
 		}else{
 			return false;
@@ -101,11 +103,11 @@ public class MessageServiceBean implements MessageService {
 }
 
 	@Override
-	public boolean deleteMessage(int mid) throws Exception {
+	public boolean deleteMessage(int mid,String path) throws Exception {
 		System.out.println(".....MessageServiceBean........deleteMessage().........");
 		messageMapper.deleteMessageLikeByMid(mid);
 		messageMapper.deleteMessageReplyByMid(mid);
-		if(deleteMessageImgs(mid)){
+		if(deleteMessageImgs(mid,path)){
 			messageMapper.deleteMessageImgByMid(mid);
 		}
 		int count = messageMapper.deleteMessageByMid(mid);	
@@ -114,7 +116,7 @@ public class MessageServiceBean implements MessageService {
 	}
 
 	@Override
-	public boolean deleteMessageImgs(int mid) throws Exception {
+	public boolean deleteMessageImgs(int mid,String path) throws Exception {
 		System.out.println(".....MessageServiceBean........deleteMessage().........");
 		List<MessageImg> messageImgs = messageMapper.getMessageImgs(mid);
 		if(messageImgs.isEmpty()){
@@ -123,9 +125,8 @@ public class MessageServiceBean implements MessageService {
 		else{
 			for(MessageImg messageImg:messageImgs){
 				String filename = messageImg.getImgUrl();
-				//File img = new File(path,filename);	
-				 FileManager.DeleteFile(filename);
-				//img.delete();
+				File img = new File(path,filename);	
+				img.delete();
 			}
 			return true;
 		}
