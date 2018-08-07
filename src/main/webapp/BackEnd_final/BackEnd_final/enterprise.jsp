@@ -87,7 +87,7 @@
 									  <div carousel-item="">
 									 ·	 
 									  	<c:forEach items="${list.swiperList }" var="s">
-									   		<img src="/uploadImage/${s.imgurl }" style="width:500px;height:346px;">																						   		
+									   		<img src="${s.imgurl }" style="width:500px;height:346px;">																						   		
 										</c:forEach>
 									 				 
 									  </div>
@@ -101,7 +101,7 @@
 								<div class="layui-card-header layui-colla-title">企业视频</div>
 								<div class="layui-card-body layui-colla-content layui-show">
 									<c:if test="${not empty list.videopath }">
-										<video id="enterprise_video" src="/uploadVideo/${list.videopath }" style="width:500px; height:250px;" 
+										<video id="enterprise_video" src="${list.videopath }" style="width:500px; height:250px;" 
 										controls="controls">
 										</video>
 									</c:if>

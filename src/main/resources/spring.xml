@@ -35,15 +35,38 @@
 		<constructor-arg name="timeout" value = "6000"></constructor-arg>
 		<constructor-arg name="password" value = "1997"></constructor-arg>	
 	</bean>
+	<!--统一的dataSource-->
+	<bean id="dynamicDataSource" class="com.neusoft.datasource.DynamicDataSource" >
+	    <property name="targetDataSources">
+	        <map key-type="java.lang.String">
+	            <!--通过不同的key决定用哪个dataSource-->
+	            <entry value-ref="ds" key="ds"></entry>
+	            <entry value-ref="ds2" key="ds2"></entry>
+	        </map>
+	    </property>
+	    <!--设置默认的dataSource-->
+	    <property name="defaultTargetDataSource" ref="ds">
+	    </property>
+	</bean>
+	
 	<!-- 配置数据源 -->
 	<!-- dbcp2lian'jie -->
 	<bean id="ds"  class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-			<property name="url"  value="jdbc:mysql://10.25.39.145:3306/team2?characterEncoding=utf-8">
+			<property name="url"  value="jdbc:mysql://localhost:3306/team2?characterEncoding=utf-8">
 			<!-- jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8 -->
 			</property>
 			<property name="username" value="root" />
 			<property name="password" value="1997" />
+	</bean>
+	<!-- dbcp2lian'jie -->
+	<bean id="ds2"  class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+			<property name="url"  value="jdbc:mysql://localhost:3306/knowledge_base?characterEncoding=utf-8">
+			<!-- jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8 -->
+			</property>
+			<property name="username" value="root" />
+			<property name="password" value="123456" />
 	</bean>
 	
 	<!-- 配置session工厂 -->
