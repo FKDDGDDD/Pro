@@ -372,6 +372,7 @@
 					success: function(data) {
 							if(data){
 								mui.alert("提示消息", "兑换成功", function() {
+									location.reload();
 								});
 							}else{
 								mui.alert("提示消息", "兑换失败,服务器异常", function() {

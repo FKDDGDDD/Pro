@@ -6,11 +6,11 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public class JedisTool {
 	//redis的ip地址
-	private static String ADDR="10.25.39.164";
+	private static String ADDR="10.25.39.145";
 	//redis的端口号
 	private static int PORT = 6379;
 	//密码
-	private static String AUTH ="cy19970611";
+	private static String AUTH ="1997";
 	//最大连接数
 	private static int MAX_ACTIVE = 1024;
 	//最大空闲数，数据库连接的最大空闲时间。超过空闲时间，数据库连接将被标记为不可用，然后被释放。设为0表示无限制。

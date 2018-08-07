@@ -1,8 +1,11 @@
 package com.neusoft.FastDFS;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.csource.common.NameValuePair;
@@ -26,9 +29,26 @@ public class App {
 			FileInputStream fileReader = new FileInputStream("D:/7.jpg");
 			String filepath = FileManager.uploadFile(fileReader, "7.jpg");
 			System.out.println(filepath);*/
-String classPath = new File(FileManager.class.getResource("/").getFile()).getCanonicalPath();
+/*String classPath = new File(FileManager.class.getResource("/").getFile()).getCanonicalPath();
 			
 			String fdfsClientConfigFilePath = classPath + File.separator ;
-			System.out.println(fdfsClientConfigFilePath);
+			System.out.println(fdfsClientConfigFilePath);*/
+			
+			File tempFile = File.createTempFile("temp", ".txt");
+		//	tempFile.deleteOnExit();
+			tempFile.deleteOnExit();
+			System.out.println(tempFile.getCanonicalPath());
+			//FileInputStream input = new FileInputStream(tempFile);
+			FileWriter writter = new FileWriter(tempFile);
+			writter.write("hello\r\nworld\r\n");
+			writter.flush();
+			writter.close();
+			BufferedReader reader = new BufferedReader(new FileReader(tempFile));
+			String str = null;
+			while((str=reader.readLine())!=null){
+				System.out.println(str);
+			}
+		reader.close();
+		
 }
 }

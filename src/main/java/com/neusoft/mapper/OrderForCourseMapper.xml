@@ -5,7 +5,7 @@
 <mapper namespace="com.neusoft.mapper.OrderForCourseMapper">
 	
 	<insert  id="addBuyOrder" parameterType="com.neusoft.po.Sorder" >
-		insert into Sorder(lid,total,status,orderTime,qid,transactionId,tel,username ) 
-		values (#{lid},#{total},#{status},STR_TO_DATE(#{orderTime},'%Y-%m-%d %H:%i:%s'),#{qid},#{transactionId},#{tel},#{username})
+		insert into sorder(lid,total,status,orderTime,qid,transactionId,tel,username ,branchname,user_coupon_id) 
+		values (#{lid},#{total},#{status},STR_TO_DATE(#{orderTime},'%Y-%m-%d %H:%i:%s'),#{qid},#{transactionId},#{tel},#{username},#{branchname},#{coupon})
 	</insert>
 </mapper>

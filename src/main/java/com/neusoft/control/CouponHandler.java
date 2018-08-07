@@ -86,8 +86,11 @@ public class CouponHandler {
 		int uid = (int)session.getAttribute("uid");
 		uc.setU_id(uid);
 		uc.setStatus("未使用");
-		if(couponService.addExchangeCoupon(uc))
+		if(couponService.addExchangeCoupon(uc)){
+			
 			return true;
+		}
+			
 		return false;
 	}
 	

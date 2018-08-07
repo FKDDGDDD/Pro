@@ -56,6 +56,9 @@ public class UserBasedCF {
 //			    if(tempString == "")
 //			    	continue;
 //			    else {
+				if("".equals(tempString)){
+					continue;
+				}
 			    	String[] s = tempString.split(",");
 			    	int userIdx = Integer.parseInt(s[0]);
 			    	int itemIdx = Integer.parseInt(s[1]);

@@ -100,7 +100,7 @@ request.setAttribute("path", basePath);
 						<div class="layui-card">
 							<div class="layui-card-header layui-colla-title">课程图片</div>
 							<div class="layui-card-body layui-colla-content layui-show" style="padding-left: 3%;">
-								<img id="cover"  style="width:200px;height:auto" src="/webapps/../upload/cover/<%=request.getAttribute("cover") %>"/>
+								<img id="cover"  style="width:200px;height:auto" src="<%=request.getAttribute("cover") %>"/>
 							</div>
 						</div>
 					</div>

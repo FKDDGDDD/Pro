@@ -46,9 +46,9 @@
 		where uid = #{uid}
 	</update>
 		
-	<update id="updateUseCoupon" parameterType="int">
+	<update id="updateUseCoupon" parameterType="com.neusoft.vo.UserCouponVo">
 		update user_coupon set status="已使用"
-		where id=#{id}
+		where c_id=#{c_id} and u_id=#{u_id} limit ;
 	</update>
 	
 	<insert id="insertCoupon">
@@ -119,5 +119,9 @@
 		where c_id=#{c_id}
 	</update>
 	
+	
+	<update id="reduceRemain" parameterType="int" >
+		update coupon set 	remain = remain-1	where c_id=#{c_id}
+	</update>
 </mapper>
 

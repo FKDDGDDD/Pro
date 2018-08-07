@@ -91,7 +91,7 @@ request.setAttribute("path", basePath);
 							  <td style="color:white; width:0px;">${f.id }</td>
 							      <td>${f.title }</td>
 							      <td >    	 
-							        <img src="/webapps/../upload/cover/${f.imgUrl }" id="img" />
+							        <img src="${f.imgUrl }" id="img" />
 							      </td>
 								  <td>${f.status }</td>
 								  <td>${f.pubTime }</td>
@@ -137,7 +137,7 @@ request.setAttribute("path", basePath);
 	    				 trStr += '<tr>';//拼接处规范的表格形式
 	    				 trStr += '<td>' + data[i].id + '</td>';//数据表的主键值
 	    				 trStr += '<td>'+data[i].title+'</td>';
-	    				 trStr += '<td><img src="/webapps/../upload/cover/' + data[i].imgUrl + ' "/></td>';//对应数组表的字段值
+	    				 trStr += '<td><img src="' + data[i].imgUrl + ' "/></td>';//对应数组表的字段值
 	    				 trStr += '<td>' + data[i].status + '</td>';
 	    				 trStr += '<td>' + data[i].pubTime + '</td>';
 	    				 trStr +='<td><button onClick="viewCourseDetail('+data[i].id+')"><i class="layui-icon layui-icon-right"></i>&nbsp;</button>';
@@ -175,7 +175,7 @@ request.setAttribute("path", basePath);
 		    				 trStr += '<tr>';//拼接处规范的表格形式
 		    				 trStr += '<td>' + data[i].id + '</td>';//数据表的主键值
 		    				 trStr += '<td>'+data[i].title+'</td>';
-		    				 trStr += '<td><img src="/webapps/../upload/cover/' + data[i].imgUrl + ' "/></td>';//对应数组表的字段值
+		    				 trStr += '<td><img src="' + data[i].imgUrl + ' "/></td>';//对应数组表的字段值
 		    				 trStr += '<td>' + data[i].status + '</td>';
 		    				 trStr += '<td>' + data[i].pubTime + '</td>';
 		    				 trStr +='<td><button onClick="viewCourseDetail('+data[i].id+')"><i class="layui-icon layui-icon-right"></i>&nbsp;</button>';

@@ -85,9 +85,9 @@ span {
 				cont.innerHTML = "";
 				img.innerHTML = "";
 				
-				img.innerHTML += '<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img style="height:200px;"  src="/webapps/../upload/courseimgs/'+data[data.length-1].imgurl+'"/></a></div>';
+				img.innerHTML += '<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img style="height:200px;"  src="/'+data[data.length-1].imgurl+'"/></a></div>';
 				for(var i = 0; i< data.length; i++){
-					img.innerHTML+= '<div class="mui-slider-item"><a href="#"><img style="height:200px;"   src="/webapps/../upload/courseimgs/'+data[i].imgurl+'"/></a></div>';
+					img.innerHTML+= '<div class="mui-slider-item"><a href="#"><img style="height:200px;"   src="/'+data[i].imgurl+'"/></a></div>';
 					if(i==0){
 						cont.innerHTML += '<div class="mui-indicator mui-active"></div>';
 					}
@@ -95,7 +95,7 @@ span {
 						cont.innerHTML  += '<div class="mui-indicator"></div>';
 					}
 				}
-				img.innerHTML+= '<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img style="height:200px;"  src="/webapps/../upload/courseimgs/'+data[0].imgurl+'"/></a></div>';
+				img.innerHTML+= '<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img style="height:200px;"  src="/'+data[0].imgurl+'"/></a></div>';
 
 			}
 		});

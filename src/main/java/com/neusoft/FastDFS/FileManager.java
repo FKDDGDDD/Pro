@@ -69,7 +69,12 @@ public class FileManager implements FileManagerconfig {
 		String fileAbsolutePath = SEPARATOR + groupName + SEPARATOR + remoteFileName; //PROTOCOL +TRACKER_NGNIX_ADDR+ TRACKER_NGNIX_PORT + 
 		return fileAbsolutePath;
 	}
-	
+	public static String upload(byte[] bytes ,String filename) throws IOException{
+		String[] split = filename.split("\\.");		
+		String ext =split[split.length-1];		
+		FastDFSFile file = new FastDFSFile(bytes, ext);
+		return  upload(file,null);
+	}
 	public static String uploadFile(InputStream inputStream,String filename) throws IOException{
 		byte[] bytes = new byte[5000000];
 		int length = inputStream.read(bytes);		
@@ -83,19 +88,7 @@ public class FileManager implements FileManagerconfig {
 		//meta_list[3] = new NameValuePair("fileAuthor","wangchao");
 		return  upload(file,null);
 	}
-	public static String upload(byte[] bytes ,String filename) throws IOException{
-		//byte[] bytes = new byte[5000000];
-		//int length = inputStream.read(bytes);		
-		String[] split = filename.split("\\.");		
-		String ext =split[split.length-1];		
-		FastDFSFile file = new FastDFSFile(bytes, ext);
-		/*NameValuePair[] meta_list = new NameValuePair[3];
-		meta_list[0] = new NameValuePair("filename",filename);
-		meta_list[1] = new NameValuePair("fileLength",String.valueOf(length));
-		meta_list[2] = new NameValuePair("fileExt",ext);*/
-		//meta_list[3] = new NameValuePair("fileAuthor","wangchao");
-		return  upload(file,null);
-	}
+	
 	public static Boolean DeleteFile(String DelFilename) throws IOException, MyException{
 		String[] split2 = DelFilename.split("/", 3);
 		String groupName = split2[1];

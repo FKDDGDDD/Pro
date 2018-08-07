@@ -13,8 +13,26 @@ public class Sorder {
 	private String transactionId;	//购买者流水号
 	private double rating; //评分
 	private String tel;
-
+	
+	private String branchname;
+	private int coupon;
+	
+	
 	private User user;
+	
+	
+	public String getBranchname() {
+		return branchname;
+	}
+	public void setBranchname(String branchname) {
+		this.branchname = branchname;
+	}
+	public int getCoupon() {
+		return coupon;
+	}
+	public void setCoupon(int coupon) {
+		this.coupon = coupon;
+	}
 	public int getOid() {
 		return oid;
 	}

@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.neusoft.mapper.CouponMapper;
 import com.neusoft.mapper.OrderForCourseMapper;
 import com.neusoft.po.Refund;
 import com.neusoft.po.Sorder;
 import com.neusoft.service.OrderServiceForCourse;
 import com.neusoft.tools.Page;
+import com.neusoft.vo.UserCouponVo;
 
 
 @Service
@@ -18,6 +20,9 @@ public class OrderServiceForCourseBean implements OrderServiceForCourse {
 	
 	@Autowired
 	private OrderForCourseMapper om;
+	
+	@Autowired
+	private CouponMapper cm;
 	
 	@Override
 	public List<Sorder> selectUserOrders(Page page, Long tel) throws Exception {
@@ -68,8 +73,14 @@ public class OrderServiceForCourseBean implements OrderServiceForCourse {
 	public void saveOrder(Sorder s) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(s.getOrderTime()+"*******");
+		
 		om.addBuyOrder(s);
 		
+	}
+	
+	@Override
+	public void changeCouponStatus(UserCouponVo ucv) throws Exception{
+		cm.updateUseCoupon(ucv);
 	}
 
 }

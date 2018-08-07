@@ -5,6 +5,7 @@ import java.util.List;
 import com.neusoft.po.Refund;
 import com.neusoft.po.Sorder;
 import com.neusoft.tools.Page;
+import com.neusoft.vo.UserCouponVo;
 
 public interface OrderServiceForCourse {
 	public List<Sorder> selectUserOrders(Page page,Long tel ) throws Exception;
@@ -20,4 +21,5 @@ public interface OrderServiceForCourse {
 	 * 我加的
 	 */
 	public void saveOrder(Sorder s) throws Exception;
+	public void changeCouponStatus(UserCouponVo ucv) throws Exception;
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.neusoft.po.Coupon;
 import com.neusoft.po.User_coupon;
 import com.neusoft.vo.CouponCondition;
+import com.neusoft.vo.UserCouponVo;
 
 public interface CouponMapper {
 	/*
@@ -20,7 +21,7 @@ public interface CouponMapper {
 	//扣除一个人的积分
 	public int updateUserInte(Map<String,Object> map) throws Exception;
 	//更新某人的优惠券为已使用
-	public int updateUseCoupon(int id) throws Exception;
+	public int updateUseCoupon(UserCouponVo ucv) throws Exception;
 	
 	
 	/*
@@ -40,6 +41,8 @@ public interface CouponMapper {
 	public int downCoupon(int c_id) throws Exception;
 	//更新某个优惠券qid ,totalnum , chan_integral
 	public int updateCoupon(Map<String, Object> map) throws Exception;
+
+	public void reduceRemain(int c_id) throws Exception;
 	
 	
 }

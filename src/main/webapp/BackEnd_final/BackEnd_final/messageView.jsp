@@ -146,7 +146,7 @@ DIV.yahoo SPAN.disabled {
                                       	<c:if test="${fn:length(m.messageimgs)==1 }">
                                       		<c:forEach items="${m.messageimgs }"  var="img">
 		                                    	<div class="layui-col-md12">
-	                                       			 <img src="../../../upload/messageimgs/${img.imgUrl}" style="height: 326px;">
+	                                       			 <img src="${img.imgUrl}" style="height: 326px;">
 	                                        	</div>
                                        		 </c:forEach>
                                       	</c:if>

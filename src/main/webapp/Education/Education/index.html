@@ -326,12 +326,12 @@
 							li.className = 'mui-table-view-cell mui-media mui-col-xs-6';
 							
 							if(kind==1){
-								li.innerHTML='<a href="course_detail.html?id='+id+'"><img style="width:174px;height:116px" class="mui-media-object" src="/webapps/../upload/cover/'+imgurl+'"><div class="mui-media-body">'+name+'</div></a>'
+								li.innerHTML='<a href="course_detail.html?id='+id+'"><img style="width:174px;height:116px" class="mui-media-object" src="'+imgurl+'"><div class="mui-media-body">'+name+'</div></a>'
 								
 								}
 							else{
 							
-								li.innerHTML='<a href="course_detail.html?lid='+id+'"><img  style="width:174px;height:116px" class="mui-media-object" src="/webapps/../upload/cover/'+imgurl+'"><div class="mui-media-body">'+name+'</div></a>'
+								li.innerHTML='<a href="course_detail.html?lid='+id+'"><img  style="width:174px;height:116px" class="mui-media-object" src="'+imgurl+'"><div class="mui-media-body">'+name+'</div></a>'
 							}
 							fragment.appendChild(li);
 						

@@ -31,5 +31,5 @@ public interface CouponService {
 	public boolean updateCoupon(int c_id,int totalnum,int chan_integral) throws Exception;
 	//通过id找Coupon
 	public Coupon selectCouponById(int c_id) throws Exception;
-	
+		
 }

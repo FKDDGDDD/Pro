@@ -363,7 +363,7 @@ function responseGood(mid,goodtype){
 function getImgs(imgs,mid){
 	
 	if(imgs.length==1){
-	var img_url = '../../../upload/messageimgs/'+imgs[0].imgUrl;	 
+	var img_url =imgs[0].imgUrl;	 
 	
 	var img = new Image();	 
 	img.src = img_url;
@@ -447,7 +447,7 @@ function getImgs(imgs,mid){
 	else{
 		var result = '';
 		for(var i =0;i<imgs.length;i++){
-			var img_url = '../../../upload/messageimgs/'+imgs[i].imgUrl;	 
+			var img_url = imgs[i].imgUrl;	 
 			 result +=  '<li class="mui-table-view-cell mui-media mui-col-xs-5">'+
 						            '<a href="#"><img class="mui-media-object" src='+img_url+' data-preview-src="" data-preview-group="1" style="height: 142px;"></a>'+
 						      '</li>';

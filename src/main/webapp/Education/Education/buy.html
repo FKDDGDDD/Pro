@@ -8,7 +8,7 @@
 		
 		<link rel="stylesheet" href="../css/buy.css">
 		<link rel="stylesheet" href="../css/mui.min.css">
-		<script type="text/javascript" src="../js/jquery-3.2.0.min.js"></script>
+		 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.js"></script>
 		<script src="../js/buy.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/app.css" />
 		<link href="../css/mui.picker.css" rel="stylesheet" />
@@ -78,8 +78,11 @@
 						var dataForm = new FormData(document.getElementById("buyform"));
 						dataForm.append("lid",getUrlParam("lid"));
 						//2.发送ajax请求
+						alert(getRootPath()+"/FrontEnd/buy/lesson");
+						console.log(dataForm.username);
+						alert(dataForm.get("username")+"***");
 						$.ajax({
-							url:"../../FrontEnd/buy/lesson",
+							url:getRootPath()+"/FrontEnd/buy/lesson",
 							type:"post",
 							data:dataForm,
 							processData:false,
@@ -214,9 +217,10 @@
 		<div class="mui-content">
 			
 			
-			<form class="mui-input-group" id="user_info">
+			<form class="mui-input-group"  id="buyform" >
 
 		<button type="button" class="mui-btn mui-btn-block"><a href="branch.html"  id="branch">选择分部地址</a></button>
+			<input type="hidden"  name="branchname" id="branchname"/>
 			<!-- 	<div>
 					选择分部：尚未实现
 				</div> -->
@@ -236,11 +240,11 @@
 
 					<div class="mui-input-row">
 						<label>电话：</label>
-						<input type="text" class="mui-input-clear">
+						<input type="text"  name="phonenumber" id="inputphone" class="mui-input-clear">
 					</div>
 					<div class="mui-input-row">
 						<label>姓名：</label>
-						<input type="text" class="mui-input-clear">
+						<input type="text"  name="username" id="inputname" class="mui-input-clear">
 					</div>
 					<!-- <div class="mui-input-row" style="folat:left">
 						<label>分部：</label>
