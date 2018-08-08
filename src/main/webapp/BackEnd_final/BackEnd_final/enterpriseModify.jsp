@@ -122,7 +122,7 @@
 											<tr>
 												<td>${s.id }</td>
 												<td>
-													<img src="/uploadImage/${s.imgurl }">
+													<img src="${s.imgurl }">
 												</td>
 												<td>${s.category }</td>
 												<td><button class="layui-btn" icon="../images/3.jpg" id="btn_enterpriseimgdelete" onClick="deleteRow(this)">删除</button></td>
@@ -145,7 +145,7 @@
 								<div class="layui-card-header layui-colla-title">企业视频</div>
 								<div class="layui-card-body layui-colla-content layui-show">
 									<c:if test="${not empty list.videopath }">
-										<video id="enterprise_video" src="/uploadVideo/${list.videopath }" style="width:500px; height:250px;" 
+										<video id="enterprise_video" src="${list.videopath }" style="width:500px; height:250px;" 
 										controls="controls">
 										</video>
 									</c:if>
@@ -314,11 +314,16 @@
 		
 		</script>
 
-
-	<script>
-		 
-	
-	</script>
+<script type="text/javascript">
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+UE.Editor.prototype.getActionUrl = function(action) {
+    if (action == "uploadimage") {
+        return "<%=request.getContextPath()%>/ueditor/uploadImage";
+    } else {
+        return this._bkGetActionUrl.call(this, action);
+    }
+}
+</script>
 
 </body>
 

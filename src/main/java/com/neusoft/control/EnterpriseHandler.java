@@ -1,13 +1,12 @@
 package com.neusoft.control;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,16 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.neusoft.FastDFS.FileManager;
 import com.neusoft.po.Address;
 import com.neusoft.po.Enterprise;
 import com.neusoft.po.FirstPageOfTeachers;
 import com.neusoft.po.Swiper;
 import com.neusoft.po.Teacher;
 import com.neusoft.service.EnterpriseService;
-import com.neusoft.tools.TeacherPage;
 import com.neusoft.vo.SingleAddress;
 import com.neusoft.vo.SinglePage;
 import com.neusoft.vo.SingleTeacher;
+import com.neusoft.vo.TeacherVO;
 
 
 @Controller
@@ -100,6 +100,7 @@ public class EnterpriseHandler {
 		swiper.setId(id);
 		swiper.setQid(qid);
 		int deltenum = enterpriseService.deleteEnterpriseImgById(swiper);
+		
 		if(deltenum>=1){
 			return "{\"result\":true}";
 		}
@@ -108,25 +109,29 @@ public class EnterpriseHandler {
 	
 	@RequestMapping(value="/BackEnd/Handler_addImgToSwiperByQid")
 	@ResponseBody
-	public String addImgToSwiperByQid(HttpServletRequest request,@RequestParam("file") MultipartFile file) throws Exception{
+	public String addImgToSwiperByQid(HttpServletRequest request,@RequestParam("file") MultipartFile[] file) throws Exception{
 		System.out.println("...........Handler.........addImgToSwiperByQid.........");
 		HttpSession session = request.getSession();
 		int qid = (Integer)session.getAttribute("qid");
 //		FileUtils.copyFile(file, new File("/images/"+file.getName()));
-		String name = file.getOriginalFilename();
-		String path = request.getServletContext().getRealPath("/");
-		
-		File tempFile = new File(path);
-		String ppath = tempFile.getParent(); 
-		
-		File destFile = new File(ppath+"/uploadImage",name);
-		file.transferTo(destFile);
+//		String name = file.getOriginalFilename();
+//		String path = request.getServletContext().getRealPath("/");
+//		
+//		File tempFile = new File(path);
+//		String ppath = tempFile.getParent(); 
+//		
+//		File destFile = new File(ppath+"/uploadImage",name);
+//		file.transferTo(destFile);
 		//int qid = Integer.parseInt(request.getParameter("qid"));
-		Swiper swiper = new Swiper();
-		swiper.setQid(qid);
-		swiper.setImgurl(name);
-		swiper.setCategory("A");
-		int insertnum = enterpriseService.addImgToSwiperByQid(swiper);		
+		
+		for(MultipartFile currentfile : file){
+			String url=FileManager.upload(currentfile.getBytes(), currentfile.getOriginalFilename());
+			Swiper swiper = new Swiper();
+			swiper.setQid(qid);
+			swiper.setImgurl(url);
+			swiper.setCategory("A");
+			int insertnum = enterpriseService.addImgToSwiperByQid(swiper);		
+		}		
 		return "{\"result\":true}";		
 	}
 	
@@ -149,20 +154,23 @@ public class EnterpriseHandler {
 		System.out.println(".........EnterpriseHandler.........updateEnterpriseVideo.......");
 		HttpSession session = request.getSession();
 		int qid = (Integer)session.getAttribute("qid");
-		String name = file.getOriginalFilename();
-//		System.out.println(name);
-		String path = request.getServletContext().getRealPath("/");
+//		String name = file.getOriginalFilename();
+////		System.out.println(name);
+//		String path = request.getServletContext().getRealPath("/");
+//		
+//		File tempFile = new File(path);
+//		String ppath = tempFile.getParent(); 
+//		
+//		File destFile = new File(ppath+"/uploadVideo",name);
+//		file.transferTo(destFile);
 		
-		File tempFile = new File(path);
-		String ppath = tempFile.getParent(); 
-		
-		File destFile = new File(ppath+"/uploadVideo",name);
-		file.transferTo(destFile);
+		String url=FileManager.upload(file.getBytes(), file.getOriginalFilename());
+
 		
 		Enterprise enterprise = new Enterprise();
 		enterprise.setQid(qid);
 		System.out.println("qid"+qid);
-		enterprise.setVideopath(name);
+		enterprise.setVideopath(url);
 		
 		int updateVideonum = enterpriseService.updateEnterpriseVideo(enterprise);
 		if(updateVideonum>0){
@@ -390,17 +398,19 @@ public class EnterpriseHandler {
 		System.out.println(".........EnterpriseHandler.............updateTeacherPhotoByQidTid.........");
 		HttpSession session = request.getSession();
 		int qid = (Integer)session.getAttribute("qid");
-		String name = file.getOriginalFilename();
-		String path = request.getServletContext().getRealPath("/");
-		
-		File tempFile = new File(path);
-		String ppath = tempFile.getParent(); 
-		
-		File destFile = new File(ppath+"/uploadImage",name);
-		file.transferTo(destFile);
-		
+//		String name = file.getOriginalFilename();
+//		String path = request.getServletContext().getRealPath("/");
+//		
+//		File tempFile = new File(path);
+//		String ppath = tempFile.getParent(); 
+//		
+//		File destFile = new File(ppath+"/uploadImage",name);
+//		file.transferTo(destFile);
+//		
+		String url=FileManager.upload(file.getBytes(), file.getOriginalFilename());
+
 		Teacher teacher = new Teacher();
-		teacher.setTphoto(name);
+		teacher.setTphoto(url);
 		teacher.setQid(qid);
 		teacher.setTid(tid);
 		
@@ -436,20 +446,22 @@ public class EnterpriseHandler {
 		System.out.println("........EnterpriseHandler...........insertTeacherByQid..........");
 		HttpSession session = request.getSession();
 		int qid = (Integer)session.getAttribute("qid");
-		String name = file.getOriginalFilename();
-		String path = request.getServletContext().getRealPath("/");
+//		String name = file.getOriginalFilename();
+//		String path = request.getServletContext().getRealPath("/");
+//		
+//		File tempFile = new File(path);
+//		String ppath = tempFile.getParent(); 
+//		
+//		File destFile = new File(ppath+"/uploadImage",name);
+//		file.transferTo(destFile);
 		
-		File tempFile = new File(path);
-		String ppath = tempFile.getParent(); 
-		
-		File destFile = new File(ppath+"/uploadImage",name);
-		file.transferTo(destFile);
-		
+		String url=FileManager.upload(file.getBytes(), file.getOriginalFilename());
+
 		Teacher teacher = new Teacher();
 		teacher.setQid(qid);
 		teacher.setTname(tname);
 		teacher.setIntroduction(introduction);
-		teacher.setTphoto(name);
+		teacher.setTphoto(url);
 		
 		int insertnum = enterpriseService.insertTeacherByQid(teacher);
 		if(insertnum>0){
@@ -480,18 +492,22 @@ public class EnterpriseHandler {
 		System.out.println(".........EnterpriseHandler.......uploadFirstPageOfTeachers........");
 		HttpSession session = request.getSession();
 		int qid = (Integer)session.getAttribute("qid");
-		String name = file.getOriginalFilename();
-		String path = request.getServletContext().getRealPath("/");
+//		String name = file.getOriginalFilename();
+//		String path = request.getServletContext().getRealPath("/");
+//		
+//		File tempFile = new File(path);
+//		String ppath = tempFile.getParent(); 
+//		
+//		File destFile = new File(ppath+"/uploadImage",name);
+//		file.transferTo(destFile);
+//		
+	
 		
-		File tempFile = new File(path);
-		String ppath = tempFile.getParent(); 
-		
-		File destFile = new File(ppath+"/uploadImage",name);
-		file.transferTo(destFile);
+		String url=FileManager.upload(file.getBytes(), file.getOriginalFilename());
 		
 		FirstPageOfTeachers firstPageOfTeachers = new FirstPageOfTeachers();
 		firstPageOfTeachers.setQid(qid);
-		firstPageOfTeachers.setImg(name);
+		firstPageOfTeachers.setImg(url);
 		
 		int insertNum = enterpriseService.uploadFirstPageOfTeachers(firstPageOfTeachers);
 		if(insertNum>0){
@@ -532,5 +548,28 @@ public class EnterpriseHandler {
 		}
 		return "{\"result\":false}";
 	}
+	
+	@RequestMapping(value="/BackEnd/Handler_approselectTeacherByName")
+	@ResponseBody
+	public List<Teacher> approselectTeacherByName(HttpServletRequest request,String tname,int curr,int limit) throws Exception{
+		System.out.println("..........EnterpriseHandler.........approselectTeacherByName....");
+		HttpSession session = request.getSession();
+		int qid = (int) session.getAttribute("qid");
+		tname = "%"+tname+"%";
+		TeacherVO teacherVO = new TeacherVO();
+		teacherVO.setQid(qid);
+		teacherVO.setTname(tname);
+		List<Teacher> list = enterpriseService.approselectTeacherByName(teacherVO);
+		request.setAttribute("teachercount", list.size());
+		List<Teacher> teacherlist = new ArrayList<>();
+		for(int i=1;i<=list.size();i++){
+			if(i>=(curr-1)*limit+1 && i<=curr*limit){
+				teacherlist.add(list.get(i));
+			}
+		}
+		
+		return teacherlist;
+	}
+
 	
 }

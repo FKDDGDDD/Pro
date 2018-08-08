@@ -11,6 +11,7 @@ import com.neusoft.po.Teacher;
 import com.neusoft.vo.SingleAddress;
 import com.neusoft.vo.SinglePage;
 import com.neusoft.vo.SingleTeacher;
+import com.neusoft.vo.TeacherVO;
 
 public interface EnterpriseMapper {
 		public Enterprise findEnterpriseByQid(int qid) throws Exception;
@@ -40,5 +41,6 @@ public interface EnterpriseMapper {
 		public int deleteFirstPageOfTeachers(int qid) throws Exception;
 //		public List<Address> getAllAddresses(int qid) throws Exception;
 		//public List<Address> getAllAddressWithFreeLessons() throws Exception;
-		public List<Address> getAddressByQidAndLid(Map map);
+		public List<Address> getAddressByQidAndLid(Map map) throws Exception;
+		public List<Teacher> approselectTeacherByName(TeacherVO teacherVO) throws Exception;
 }

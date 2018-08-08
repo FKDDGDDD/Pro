@@ -10,6 +10,7 @@ import com.neusoft.po.Teacher;
 import com.neusoft.vo.SingleAddress;
 import com.neusoft.vo.SinglePage;
 import com.neusoft.vo.SingleTeacher;
+import com.neusoft.vo.TeacherVO;
 
 public interface EnterpriseService {
 	    public Enterprise findEnterpriseByQid(int qid) throws Exception;
@@ -40,5 +41,6 @@ public interface EnterpriseService {
 //		public List<Teacher> selectAllTeachers(int qid) throws Exception;
 //		public List<Address> selectAllAddress(int qid) throws Exception;
 //		//public List<Address> selectAllAddressWithFreeLessons(int qid) throws Exception;
-		public List<Address> selectAddressByQidAndLid(int qid,int lid);
+		public List<Address> selectAddressByQidAndLid(int qid,int lid) throws Exception;
+		public List<Teacher> approselectTeacherByName(TeacherVO teacherVO) throws Exception;
 }

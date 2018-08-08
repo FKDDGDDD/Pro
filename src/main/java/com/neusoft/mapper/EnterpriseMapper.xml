@@ -44,7 +44,7 @@
 	</delete>
 	
 	<insert id="addImgToSwiperByQid" parameterType="com.neusoft.po.Swiper">
-	    insert into Swiper(id,qid,imgurl,category) 
+	    insert into swiper(id,qid,imgurl,category) 
 	    values(null, #{qid}, #{imgurl},#{category})
 	    
 	</insert>
@@ -149,24 +149,30 @@
  	    where qid=#{qid} and tid=#{tid};
  	</delete>
  	
+ 	<select id="approselectTeacherByName" parameterType="com.neusoft.vo.TeacherVO" resultType="com.neusoft.po.Teacher">
+ 	    select *
+ 	    from teacher
+ 	    where tname like #{tname} and qid=#{qid};
+ 	</select>
+ 	
  	<select id="findAllTeacherByQid" parameterType="int" resultType="int">
  	    select count(tid)
  	    from teacher;
  	</select>
  	
  	<insert id="uploadFirstPageOfTeachers" parameterType="com.neusoft.po.FirstPageOfTeachers">
- 	    insert into firstPageOfTeachers (id, qid, img)
+ 	    insert into firstpageofteachers (id, qid, img)
  	    values (null, #{qid}, #{img});
  	</insert>
  	
  	<select id="selectFirstPageOfTeachers" parameterType="int" resultType="com.neusoft.po.FirstPageOfTeachers">
  	    select id, img
- 	    from firstPageOfteachers
+ 	    from firstpageofteachers
  	    where qid = #{qid};
  	</select>
  	
  	<delete id="deleteFirstPageOfTeachers" parameterType="int">
- 	    delete from firstPageOfTeachers
+ 	    delete from firstpageofteachers
  	    where qid=#{qid};
  	</delete>
  	

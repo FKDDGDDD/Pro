@@ -53,7 +53,11 @@
 			<!-- 内容主体区域 -->
 			<div class="layui-card">
 				<div class="layui-card-header">
-					<span>讲师信息表</span>
+					<span style="float:left;">讲师信息表</span>
+					<span style="float : left; margin-left:20px;font-size:25px;font-weight:400;">
+						<input id="queryteacher" type="text" />
+						<button class="layui-btn" id="queryteacherbutton">查询</button>
+					</span>
 					<span style="float: right;">
 						<a href="<%=request.getContextPath() %>/BackEnd_final/BackEnd_final/teacherAdd.jsp?qid=<%=request.getParameter("qid") %>" id="a_teacherAdd">
 							<i class="layui-icon layui-icon-add-1"></i>添加教师
@@ -76,7 +80,7 @@
 							<tr>
 								<td style="color:white; width:0px;">${t.tid }</td>						
 								<td>${t.tname }</td>
-								<td><img src="/uploadImage/${t.tphoto }" id="img" /></td>
+								<td><img src="${t.tphoto }" id="img" /></td>
 								<td>
 									<textarea class="te" rows="5" cols="60" readonly>${t.introduction }
 								    </textarea>
@@ -126,7 +130,7 @@
 	    				 trStr += '<tr>';//拼接处规范的表格形式
 	    				 trStr += '<td style="color:white; width:0px;">' + data[i].tid + '</td>';//数据表的主键值
 	    				 trStr += '<td>'+data[i].tname+'</td>';
-	    				 trStr += '<td><img src="/uploadImage/' + data[i].tphoto + ' "/></td>';//对应数组表的字段值
+	    				 trStr += '<td><img src="' + data[i].tphoto + ' "/></td>';//对应数组表的字段值
 	    				 trStr += '<td><textarea class="te" rows="5" cols="60" readonly>' + data[i].introduction + '</textarea></td>';
 	    				 trStr +='<td><button onClick="callFunction('+data[i].tid+')"><i class="layui-icon layui-icon-edit" ></i>&emsp;</button><button onClick="deleteRow(this)"><i class="layui-icon layui-icon-delete"></i></button></td>';
 	    				 trStr += '</tr>'
@@ -139,6 +143,79 @@
 	    }
 	  });
 	});
+	</script>
+	
+	<script>
+		var tname;
+		$("#queryteacherbutton").click(function(){
+			tname=$("#queryteacher").val();
+			$.ajax({
+    			url:"<%=request.getContextPath()%>/BackEnd/Handler_approselectTeacherByName",
+    			type:"post",
+    			data:{
+    				tname:tname,
+    				curr:1,
+    				limit:3
+    			},
+    			dataType:"json",
+    			success:function(data){
+    				console.log(data);
+    				$("#teacherinfo").empty();
+    				var trStr = '';//动态拼接table
+    				 for (var i = 0; i < data.length; i++) {//循环遍历出json对象中的每一个数据并显示在对应的td中
+    				 trStr += '<tr>';//拼接处规范的表格形式
+    				 trStr += '<td style="color:white; width:0px;">' + data[i].tid + '</td>';//数据表的主键值
+    				 trStr += '<td>'+data[i].tname+'</td>';
+    				 trStr += '<td><img src="' + data[i].tphoto + ' "/></td>';//对应数组表的字段值
+    				 trStr += '<td><textarea class="te" rows="5" cols="60" readonly>' + data[i].introduction + '</textarea></td>';
+    				 trStr +='<td><button onClick="callFunction('+data[i].tid+')"><i class="layui-icon layui-icon-edit" ></i>&emsp;</button><button onClick="deleteRow(this)"><i class="layui-icon layui-icon-delete"></i></button></td>';
+    				 trStr += '</tr>'
+    				 } 
+    				$("#teacherinfo").html(trStr);
+    			}
+    		});
+			layui.use('laypage', function(){
+				  var laypage = layui.laypage;
+				  
+				  //执行一个laypage实例
+				  laypage.render({
+				    elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+				    ,count: <%= request.getAttribute("teachercount")%> //数据总数，从服务端得到
+				    ,limit:3
+				    ,jump:function(obj,first){
+				    	//if(!first){
+				    		//alert("not first");
+				    		$.ajax({
+				    			url:"<%=request.getContextPath()%>/BackEnd/Handler_approselectTeacherByName",
+				    			type:"post",
+				    			data:{
+				    				tname:tname,
+				    				curr:obj.curr,
+				    				limit:obj.limit
+				    			},
+				    			dataType:"json",
+				    			success:function(data){
+				    				console.log(data);
+				    				$("#teacherinfo").empty();
+				    				var trStr = '';//动态拼接table
+				    				 for (var i = 0; i < data.length; i++) {//循环遍历出json对象中的每一个数据并显示在对应的td中
+				    				 trStr += '<tr>';//拼接处规范的表格形式
+				    				 trStr += '<td style="color:white; width:0px;">' + data[i].tid + '</td>';//数据表的主键值
+				    				 trStr += '<td>'+data[i].tname+'</td>';
+				    				 trStr += '<td><img src="' + data[i].tphoto + ' "/></td>';//对应数组表的字段值
+				    				 trStr += '<td><textarea class="te" rows="5" cols="60" readonly>' + data[i].introduction + '</textarea></td>';
+				    				 trStr +='<td><button onClick="callFunction('+data[i].tid+')"><i class="layui-icon layui-icon-edit" ></i>&emsp;</button><button onClick="deleteRow(this)"><i class="layui-icon layui-icon-delete"></i></button></td>';
+				    				 trStr += '</tr>'
+				    				 } 
+				    				$("#teacherinfo").html(trStr);
+				    			}
+				    		});
+				    	//}
+							
+				    }
+				  });
+				});
+		});
 	</script>
 	
 	<script>

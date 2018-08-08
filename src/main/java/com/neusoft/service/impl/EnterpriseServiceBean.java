@@ -19,6 +19,7 @@ import com.neusoft.service.EnterpriseService;
 import com.neusoft.vo.SingleAddress;
 import com.neusoft.vo.SinglePage;
 import com.neusoft.vo.SingleTeacher;
+import com.neusoft.vo.TeacherVO;
 
 import redis.clients.jedis.JedisPool;
 
@@ -86,6 +87,8 @@ public class EnterpriseServiceBean implements EnterpriseService {
 	public int deleteEnterpriseImgById(Swiper swiper) throws Exception {
 		System.out.println("............EnterpriseServiceBean..........deleteEnterpriseImgById........");
 		int deletenum = enterpriseMapper.deleteEnterpriseImgById(swiper);
+		int qid = swiper.getQid();
+		jedisPool.getResource().del("swiperlist"+qid);
 		return deletenum;
 	}
 
@@ -93,6 +96,8 @@ public class EnterpriseServiceBean implements EnterpriseService {
 	public int addImgToSwiperByQid(Swiper swiper) throws Exception{
 		System.out.println(".........EnterpriseServiceBean...........addImgToSwiperByQid.........");
 		int insertnum = enterpriseMapper.addImgToSwiperByQid(swiper);
+		int qid = swiper.getQid();
+		jedisPool.getResource().del("swiperlist"+qid);
 		return insertnum;
 	}
 
@@ -135,6 +140,8 @@ public class EnterpriseServiceBean implements EnterpriseService {
 	public int updateBranchInfoByQidId(Address address) throws Exception {
 		System.out.println("...........EnterpriseServiceBean...........updateBranchInfoByQidId...........");
 		int updateBranchNum = enterpriseMapper.updateBranchInfoByQidId(address);
+		int qid = address.getQid();
+		jedisPool.getResource().del("swiperlist"+qid);
 		return updateBranchNum;
 	}
 
@@ -142,6 +149,8 @@ public class EnterpriseServiceBean implements EnterpriseService {
 	public int insertBranchByQid(Address address) throws Exception {
 		System.out.println(".............EnterpriseServiceBean..........insertBranchByQid.......");
 		int insertBranchNum = enterpriseMapper.insertBranchByQid(address);
+		int qid = address.getQid();
+		jedisPool.getResource().del("swiperlist"+qid);
 		return insertBranchNum;
 	}
 
@@ -149,6 +158,8 @@ public class EnterpriseServiceBean implements EnterpriseService {
 	public int deleteBranchByQidId(SingleAddress singleAddress) throws Exception {
 		System.out.println(".............EnterpriseServiceBean..........deleteBranchByQidId........");
 		int deletenum = enterpriseMapper.deleteBranchByQidId(singleAddress);
+		int qid = singleAddress.getQid();
+		jedisPool.getResource().del("swiperlist"+qid);
 		return deletenum;
 	}
 
@@ -237,11 +248,18 @@ public class EnterpriseServiceBean implements EnterpriseService {
 	}
 
 	@Override
-	public List<Address> selectAddressByQidAndLid(int qid,int lid) {
+	public List<Address> selectAddressByQidAndLid(int qid,int lid) throws Exception{
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("lid", lid);
 		map.put("qid", qid);
 		List<Address> addresses = enterpriseMapper.getAddressByQidAndLid(map);
 		return addresses;
+	}
+
+	@Override
+	public List<Teacher> approselectTeacherByName(TeacherVO teacherVO) throws Exception {
+		System.out.println("............EnterpriseServiceBean.........approselectTeacherByName..........");
+		List<Teacher> list= enterpriseMapper.approselectTeacherByName(teacherVO);
+		return list;
 	}
 }
