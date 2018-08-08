@@ -69,7 +69,7 @@
 						</div>
 						<div class="layui-form-item">
 							<button class="layui-btn" type="button" style="margin: 10% 0 0 45%;" id="updateIntegral">
-								保存教师信息
+								保存积分信息
 							</button>
 						</div>	
 					</div>

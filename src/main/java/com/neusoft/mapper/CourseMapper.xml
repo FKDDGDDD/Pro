@@ -78,7 +78,7 @@
 		select * from lesson where lid=#{lid}
 	</select>
 	<insert  id="addFreeListen" parameterType="com.neusoft.po.FreeListen" >
-		insert into FREELISTEN(title,imgurl,fdesc,status,branchid,pubtime ) 
+		insert into freelisten(title,imgurl,fdesc,status,branchid,pubtime ) 
 		values ( #{title},#{imgUrl},#{fdesc},#{status},#{branchid},#{pubTime} )
 		 	<selectKey keyProperty="id" order="AFTER" resultType="int">
            		 select LAST_INSERT_ID()
@@ -98,7 +98,7 @@
 	</update>
 	
 	<select id="getFreeListen" parameterType="int" resultType="com.neusoft.po.FreeListen" >
-		select * from FREELISTEN where id=#{id}
+		select * from freelisten where id=#{id}
 	</select>
 	
 	<delete id="deleteCourse" parameterType="int">
@@ -114,8 +114,8 @@
 	
 
 	<select id="getTotalNumOfFreeListens" parameterType="int" resultType="int" >
-		select count(*) from FREELISTEN,address
-		 where qid=#{qid} and address.aid=FREELISTEN.branchid
+		select count(*) from freelisten,address
+		 where qid=#{qid} and address.aid=freelisten.branchid
 	</select>
 	
 	<select id="getTotalNumOdBranchFreeListen" parameterType="int" resultType="int" >

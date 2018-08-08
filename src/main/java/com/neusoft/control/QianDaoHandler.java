@@ -29,6 +29,7 @@ public class QianDaoHandler {
 	private QianDaoService qianDaoService;
 	
 	@RequestMapping(value="/test/QianDao/insertDateUserID")
+	@ResponseBody
 	public String insertDateUserID(HttpServletRequest request,String date) throws Exception{
 		System.out.println("...........QianDaoHandler............insertDateUserID..........");
 		HttpSession session = request.getSession();

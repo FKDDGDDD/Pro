@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.neusoft.mapper.EnterpriseForCourseMapper;
 import com.neusoft.po.Address;
 import com.neusoft.po.Enterprise;
@@ -13,6 +15,8 @@ import com.neusoft.po.Swiper;
 import com.neusoft.po.Teacher;
 import com.neusoft.service.EnterpriseServiceForCourse;
 
+import redis.clients.jedis.JedisPool;
+
 
 @Service
 public class EnterpriseServiceForCourseBean implements EnterpriseServiceForCourse {
@@ -20,6 +24,9 @@ public class EnterpriseServiceForCourseBean implements EnterpriseServiceForCours
 	@Autowired
 	private EnterpriseForCourseMapper enterpriseMapper;
 
+	@Autowired
+	private JedisPool jedisPool;
+	
 	@Override
 	public Enterprise selectEnterpriseInfoById(int qid) throws Exception {
 		// TODO Auto-generated method stub
@@ -39,19 +46,38 @@ public class EnterpriseServiceForCourseBean implements EnterpriseServiceForCours
 	
 	@Override
 	public List<Address> selectAllAddress(int qid) throws Exception {
+		String jString =jedisPool.getResource().get("addresses"+qid);
+		Gson gson = new Gson();
 		List<Address> branchlist;
-		try {
+		
+		if(jString == null){
+			System.out.println("没有数据。初始化redis数据库中的值");
 			branchlist=enterpriseMapper.getAllAddresses(qid);
+			String jsonstr = gson.toJson(branchlist);
+			jedisPool.getResource().set("addresses"+qid, jsonstr);
+			return branchlist;
+		}else{
+			System.out.println("redis有值，直接取");
+			branchlist = gson.fromJson(jString, new TypeToken<List<Address>>(){}.getType());
+			System.out.println(branchlist.get(0).getBranch()+"lalal1");
+		    return branchlist;
 		}
-		catch(Exception e) {
-			e.printStackTrace();
-			branchlist=null;
-		}
-		for(Address a:branchlist) {
-			System.out.println(a.getBranch()+"**");
-		}
-		return branchlist;
+		
+		
+		
+//		try {
+//			branchlist=enterpriseMapper.getAllAddresses(qid);
+//		}
+//		catch(Exception e) {
+//			e.printStackTrace();
+//			branchlist=null;
+//		}
+//		for(Address a:branchlist) {
+//			System.out.println(a.getBranch()+"**");
+//		}
+//		return branchlist;
 	}
+
 	
 
 	

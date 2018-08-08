@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.mapper.KBMapper">
+
+	<select id="getLessonByLike" resultType="com.neusoft.po.Lesson" parameterType="Map">
+		select l.*
+		from lesson l, address a, lessonbranch lb
+		where 1=1 and l.lid=lb.lid and a.aid=lb.branchid
+		<if test="lname != null">
+			and l.lname like '%${lname}%'
+		</if>
+		<if test="branch != null">
+			and a.branch like '%${branch}%'
+		</if>
+		<if test="qid != null">
+			and l.qid=#{qid}
+		</if>
+	</select>
+	
+	<select id = "findUserNum" resultType="int" parameterType="int">
+		select count(*) 
+		from user
+		where qid=#{qid}
+	</select>
+	
+	<select id="getMaxLessonId" parameterType="int" resultType="int">
+		select max(lid) 
+		from lesson 
+		where lesson.qid =#{qid}
+	</select>
+	
+	<select id="getLessonById" resultType="com.neusoft.po.Lesson" parameterType="int">
+		select *
+		from lesson
+		where lid=#{lid}
+	</select>
+</mapper>

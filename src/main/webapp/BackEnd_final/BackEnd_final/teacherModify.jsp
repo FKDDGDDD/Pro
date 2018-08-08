@@ -51,7 +51,7 @@
 									<div class="layui-card-body layui-colla-content layui-show" 
 										style="padding-left: 3%;">
 									  
-										<img src="/uploadImage/${teacher.tphoto }" name="teacher_img" class="layui-upload-img" 
+										<img src="${teacher.tphoto }" name="teacher_img" class="layui-upload-img" 
 											id="demo1" style="width: 100%;"><br /><br />
 										<button type="button" class="layui-btn" id="btn_delete">
 											删除图片</button>

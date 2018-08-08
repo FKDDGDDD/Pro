@@ -192,11 +192,11 @@ request.setAttribute("path", basePath);
 													</c:if>
 													<c:forEach items="${requestScope.branches }" var="b">
 													
-															<c:if test="${b.choosed==1}">
+															<c:if test="${b.choosed==0}">
 																<input type="checkbox" name="sub" value="${b.branchname}" id="${b.radioID}" title="${b.branchname}" >
 																<%-- <input type="radio" name="sub" value="${b.branchname}" id="${b.radioID}" title="${b.branchname}" /> --%>
 															</c:if>
-															<c:if test="${b.choosed==0}">
+															<c:if test="${b.choosed==1}">
 																 <input type="checkbox" name="sub" value="${b.branchname}" id="${b.radioID}" title="${b.branchname}" checked=true>
 																<%-- <input type="radio" name="sub" value="${b.branchname}" id="${b.radioID}" title="${b.branchname}"  checked=true/> --%>
 															</c:if>
