@@ -40,7 +40,7 @@ public class SpeechRecog {
     }
  
     private byte[] getText(String filename) throws Exception {
-        File pcmFile = new File(path+filename);
+        File pcmFile = new File(filename);
         HttpURLConnection conn = (HttpURLConnection) new URL(serverURL).openConnection();
  
         // construct params

@@ -50,8 +50,8 @@
 	</delete>
 	
 	<select id="getBranchesBylid" parameterType="int" resultType="com.neusoft.po.Address">
-		select Address.* 
-		from Address,Lesson,LessonBranch
+		select address.* 
+		from address,lesson,lessonbranch
 		where lesson.lid=#{lid} and lesson.lid=lessonbranch.lid and lessonbranch.branchid=address.aid
 	</select>
 	

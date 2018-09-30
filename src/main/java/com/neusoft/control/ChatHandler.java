@@ -2,6 +2,7 @@ package com.neusoft.control;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -97,8 +98,8 @@ public class ChatHandler {
 		response.setCharacterEncoding("utf-8");
 
 		byte[] b = speech.getBytes();
-		String fileName = filename + ".wav";
-		makeFile(b, "F:\\", fileName);
+		//String fileName = filename + ".wav";
+		String fileName = makeFile(b, filename);
 		String text = new String(sr.recognize(fileName), "UTF-8");
 		StringBuilder textBuilder = new StringBuilder(text);
 		String text2 = textBuilder.substring(0,text.length()-1).toString();
@@ -108,38 +109,26 @@ public class ChatHandler {
 	
 	/** 
      * 根据byte数组，生成文件 
+	 * @throws IOException 
      */  
-    protected void makeFile(byte[] bfile, String filePath,String fileName) {  
-        BufferedOutputStream bos = null;  
-        FileOutputStream fos = null;  
-        File file = null;  
-        try {  
-            File dir = new File(filePath);  
-            if(!dir.exists()&&dir.isDirectory()){//判断文件目录是否存在  
+    protected String makeFile(byte[] bfile, String fileName) throws IOException {  
+	        BufferedOutputStream bos = null;  
+	        FileOutputStream fos = null;  
+      		File file = null;  
+      
+            //File dir = new File(filePath);  
+             file = File.createTempFile("fileName", ".wav");
+             file.deleteOnExit();
+          /*  if(!dir.exists()&&dir.isDirectory()){//判断文件目录是否存在  
                 dir.mkdirs();  
             }  
-            file = new File(filePath+"\\"+fileName);  
+            file = new File(filePath+"\\"+fileName);  */
             fos = new FileOutputStream(file);  
             bos = new BufferedOutputStream(fos);  
             bos.write(bfile);  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        } finally {  
-            if (bos != null) {  
-                try {  
-                    bos.close();  
-                } catch (IOException e1) {  
-                    e1.printStackTrace();  
-                }  
-            }  
-            if (fos != null) {  
-                try {  
-                    fos.close();  
-                } catch (IOException e1) {  
-                    e1.printStackTrace();  
-                }  
-            }  
-        }  
+            bos.close();
+            return file.getCanonicalPath();
+
     }  
 	
 	@RequestMapping(value="/FrontEnd/chat/getWelcome")

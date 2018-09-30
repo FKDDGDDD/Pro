@@ -130,6 +130,7 @@
 									},
 									success:function(data){					
 										document.getElementById("qiandaodays").innerHTML=data;
+										
 										if(data%7==0){
 											$.ajax({
 									  			url:"../../test/QianDao/increaseIntegralByUidQid",
@@ -156,6 +157,19 @@
 												}
 									  		});
 											
+										}else{
+											$.ajax({
+									  			url:"../../test/QianDao/findIntegralByQidUid",
+									  			type:"post",
+												dataType:"json",
+												success:function(data){					
+													document.getElementById("totalintegral").innerHTML=data;					
+												},
+												error:function(data){
+													alert(data.result);
+													//alert("error")
+												}
+									  		});
 										}
 									},
 									error:function(data){

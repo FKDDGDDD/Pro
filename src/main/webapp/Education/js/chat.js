@@ -72,11 +72,11 @@ function show(str){
 				
 				var html = "<div class='send'><div class='msg_img'>";
 				for(var i=2; i<min(5,data.length); i++){
-					html += "<p class='p_img'>"+"<a href='#'><img src='../../../img/python.png'><span class='span_lname'>"+fillWithBlank(data[i].lname)+
+					html += "<p class='p_img'>"+"<a href='course_detail.html?lid="+data[i].lid+"><img src='../img/python.png'><span class='span_lname'>"+fillWithBlank(data[i].lname)+
 					"</span><span class='span_lprice'>￥"+data[i].lprice+"</span></a>"+
 					"</p>";
 				}
-				html += "<p class='p_img'><a href='#' onclick='show(&quot;换一批&quot;)'><img class='img_refresh' src='../../../img/refresh2.png'>" +
+				html += "<p class='p_img'><a href='#' onclick='show(&quot;换一批&quot;)'><img class='img_refresh' src='../img/refresh2.png'>" +
 						"<span class='span_lname span_refresh'>换一批</span><span class='span_lname span_ad'>遇见所爱</span>" +
 						"</a></p></div></div>";
 				sendWithList(html);

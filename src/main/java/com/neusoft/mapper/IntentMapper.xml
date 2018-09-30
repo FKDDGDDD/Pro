@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.mapper.IntentMapper">
+
+	<select id="getIntentCount" resultType="int">
+		select count(*)
+		from intent
+	</select>
+	
+	<select id="getTemplet" parameterType="Map" resultType="String">
+		select t.content
+		from intent i, checklist c, templet t
+		where i.content=#{intent} and i.id=c.intent_id and c.templet_id=t.tid 
+		<choose>
+			<when test="entity_list != null">and c.entity_list=#{entity_list}</when>
+			<otherwise>and c.entity_list is null</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getAnsList" parameterType="java.lang.String" resultType="java.lang.String">
+		select DISTINCT c.entity_list
+		from checklist c, intent i, templet t
+		where i.content=#{intent} and i.id=c.intent_id and c.templet_id=t.tid
+	</select>
+	
+	<select id="getWelcome" resultType="java.lang.String">
+		select t.content
+		from intent i, checklist c, templet t
+		where i.content='欢迎词' and i.id=c.intent_id and c.templet_id=t.tid
+	</select>
+</mapper>

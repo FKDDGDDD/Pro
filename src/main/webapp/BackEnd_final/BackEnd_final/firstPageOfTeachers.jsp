@@ -46,7 +46,7 @@
 									<div class="layui-card-body layui-colla-content layui-show" style="padding-left: %;">
 										<div class="layui-upload-list">
 											<c:if test="${not empty img.id }">
-												<img class="layui-upload-img" id="demo1" src="/uploadImage/${img.img }">
+												<img class="layui-upload-img" id="demo1" src="${img.img }">
 											</c:if>
 											<c:if test="${empty img.id }">
 												<img class="layui-upload-img" id="demo1">
